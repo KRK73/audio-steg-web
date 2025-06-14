@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head><title>Audio Steganography</title></head>
+<body>
+<h1>Audio Steganography Tool</h1>
+
+<h2>1. Encode Message</h2>
+<form action="/encode" method="post" enctype="multipart/form-data">
+    <label>Secret Message:</label><br>
+    <textarea name="message" rows="5" cols="50"></textarea><br><br>
+    <label>Upload WAV File:</label>
+    <input type="file" name="audio" accept=".wav"><br><br>
+    <button type="submit">Encode</button>
+</form>
+
+<hr>
+
+<h2>2. Decode Message</h2>
+<form action="/decode" method="post" enctype="multipart/form-data">
+    <label>Upload Stego WAV File:</label>
+    <input type="file" name="stego_audio" accept=".wav"><br><br>
+    <button type="submit">Decode</button>
+</form>
+</body>
+</html>
