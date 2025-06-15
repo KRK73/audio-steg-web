@@ -93,7 +93,11 @@ def encode():
 
     audio_path = os.path.join(UPLOAD_FOLDER, secure_filename(audio.filename))
     audio.save(audio_path)
-    output_path = os.path.join(UPLOAD_FOLDER, "stego_output.wav")
+    output_name = request.form.get('output_name', 'stego_output').strip()
+    if not output_name.endswith('.wav'):
+    output_name += '.wav'
+    output_path = os.path.join(UPLOAD_FOLDER, secure_filename(output_name))
+
 
     try:
         embed_message(audio_path, output_path, text)
