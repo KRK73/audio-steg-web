@@ -88,22 +88,25 @@ def index():
 def encode():
     text = request.form['message']
     audio = request.files['audio']
+    output_name = request.form.get('output_name', 'stego_output').strip()
+
     if not text or not audio:
         return "Error: Missing input.", 400
 
+    if not output_name.endswith('.wav'):
+        output_name += '.wav'
+
     audio_path = os.path.join(UPLOAD_FOLDER, secure_filename(audio.filename))
     audio.save(audio_path)
-output_name = request.form.get('output_name', 'stego_output').strip()
-if not output_name.endswith('.wav'):
-    output_name += '.wav'
-output_path = os.path.join(UPLOAD_FOLDER, secure_filename(output_name))
 
+    output_path = os.path.join(UPLOAD_FOLDER, secure_filename(output_name))
 
     try:
         embed_message(audio_path, output_path, text)
         return send_file(output_path, as_attachment=True)
     except Exception as e:
         return f"Error: {str(e)}"
+
 
 @app.route('/decode', methods=['POST'])
 def decode():
